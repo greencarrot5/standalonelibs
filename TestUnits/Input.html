@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test unit for the input library</title>
+	</head>
+	<body>
+		<script type="module">
+			import * as Input from "../Input.js";
+
+			Input.bindKey("ArrowLeft", "left");
+			Input.bindKey("GamepadLJoystickLeft", "left");
+			Input.bindKey("GamepadDpadLeft", "left");
+
+			Input.bindKey("ArrowRight", "right");
+			Input.bindKey("GamepadLJoystickRight", "right");
+			Input.bindKey("GamepadDpadRight", "right");
+
+			Input.bindKey("ArrowDown", "down");
+			Input.bindKey("GamepadLJoystickDown", "down");
+			Input.bindKey("GamepadDpadDown", "down");
+
+			Input.bindKey("ArrowUp", "up");
+			Input.bindKey("GamepadLJoystickUp", "up");
+			Input.bindKey("GamepadDpadUp", "up");
+
+			let canvas = document.createElement("canvas");
+
+			canvas.width = 800;
+			canvas.height = 600;
+
+			document.body.appendChild(canvas);
+
+			let context = canvas.getContext("2d");
+
+			let playerX = 400;
+			let playerY = 300;
+
+			const SPEED = 5;
+
+			function loop() {
+				
+				if (Input.isActionPressed("left")) {
+					playerX -= SPEED;
+				}
+
+				if (Input.isActionPressed("right")) {
+					playerX += SPEED;
+				}
+
+				if (Input.isActionPressed("up")) {
+					playerY -= SPEED;
+				}
+
+				if (Input.isActionPressed("down")) {
+					playerY += SPEED;
+				}
+				
+				playerX = Math.max(25, Math.min(775, playerX));
+				playerY = Math.max(25, Math.min(575, playerY));
+
+
+
+				context.fillStyle = "lightskyblue";
+				context.fillRect(0, 0, 800, 600);
+
+				context.fillStyle = "red";
+				context.fillRect(playerX-25, playerY-25, 50, 50);
+
+
+
+				window.requestAnimationFrame(loop);
+
+			}
+
+			loop();
+		</script>
+	</body>
+</html>
