@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tilemap test unit</title>
+	</head>
+	<body>
+		<script type="module">
+		
+			import { Tilemap } from "../Tilemap.js";
+			
+			import * as Input from "../Input.js";
+
+
+
+			Input.bindKey("ArrowLeft", "left");
+			Input.bindKey("GamepadDpadLeft", "left");
+			Input.bindKey("GamepadLJoystickLeft", "left");
+
+			Input.bindKey("ArrowRight", "right");
+			Input.bindKey("GamepadDpadRight", "right");
+			Input.bindKey("GamepadLJoystickRight", "right");
+
+			Input.bindKey("ArrowUp", "up");
+			Input.bindKey("GamepadDpadUp", "up");
+			Input.bindKey("GamepadLJoystickUp", "up");
+			
+			Input.bindKey("ArrowDown", "down");
+			Input.bindKey("GamepadDpadDown", "down");
+			Input.bindKey("GamepadLJoystickDown", "down");
+
+
+
+			let brickTexture = new Image();
+			brickTexture.src = "./brick.png";
+
+			let tilemap = new Tilemap(40, {"brick":brickTexture});
+
+			for (let i=0;i<100;i++) {
+
+				tilemap.setTile(Math.floor(Math.random() * 15), Math.floor(Math.random() * 15), "brick");
+
+			}
+
+			console.log(tilemap.tiles);
+
+			let canvas = document.createElement("canvas");
+
+			canvas.width = 800;
+			canvas.height = 600;
+
+			document.body.appendChild(canvas);
+
+			let context = canvas.getContext("2d");
+
+			let camX = -400;
+			let camY = -300;
+
+			function loop() {
+
+				if (Input.isActionPressed("left")) {
+					camX -= 5;
+				}
+
+				if (Input.isActionPressed("right")) {
+					camX += 5;
+				}
+
+				if (Input.isActionPressed("up")) {
+					camY -= 5;
+				}
+
+				if (Input.isActionPressed("down")) {
+					camY += 5;
+				}
+
+				context.fillStyle = "lightskyblue";
+				context.fillRect(0, 0, 800, 600);
+
+				tilemap.render(canvas, -camX, -camY);
+
+				window.requestAnimationFrame(loop);
+
+			}
+
+			loop();
+
+		</script>
+	</body>
+</html>
