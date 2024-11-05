@@ -58,6 +58,37 @@ class Tilemap {
 	}
 
 	getTile(x, y) {
+		
+		let minI = 0;
+		let maxI = this.tiles.length;
+
+		while (maxI - minI > 1) {
+
+			let searchI = Math.ceil((minI + maxI) / 2);
+
+			if (this.tiles[searchI][0] == x && this.tiles[searchI][1] == y) {
+
+				return this.tiles[searchI][2];
+
+			} else if (this.tiles[searchI][0] < x || (this.tiles[searchI][0] == x && this.tiles[searchI][1] < y)) {
+
+				minI = searchI;
+
+			} else {
+
+				maxI = searchI;
+
+			}
+
+		}
+
+		if (this.tiles[maxI][0] == x && this.tiles[maxI][1] == y) {
+
+			return this.tiles[maxI][2];
+
+		}
+
+		return null;
 
 	}
 
